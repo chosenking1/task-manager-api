@@ -17,7 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('approve-task/{task}', function ($task) {
-    return redirect("http://localhost:3000/task/$task/approveTask");
+    // return redirect("http://localhost:3000/task/$task/approveTask");
+    return redirect("https://taskmanagerview-production.up.railway.app/task/$task/approveTask");
+    
 })->name('approve.task');
 
 // Route::get('approve-task/{task}', function ($task) {
@@ -25,7 +27,8 @@ Route::get('approve-task/{task}', function ($task) {
 // })->name('approve.task');
 
 Route::get('task/{task}', function ($task) {
-    return redirect("http://localhost:3000/task/$task");
+    // return redirect("http://localhost:3000/task/$task");
+    return redirect("https://taskmanagerview-production.up.railway.app/task/$task");
 })->name('task.approved');
 
 
