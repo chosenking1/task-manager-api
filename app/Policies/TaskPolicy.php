@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Http\Request;
 
 class TaskPolicy
 {
@@ -35,11 +36,26 @@ class TaskPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Task $task): bool
-    {
-        return $user->id === $task->user_id || $user->user_role === 'approver';
+    // public function update(User $user, Task $task): bool
+    // {
+    //     return $user->id === $task->user_id || $user->user_role === 'approver';
 
+    // }
+    public function update(User $user, Task $task)
+    {
+        if ($user->user_role === 'approver' && $task->status == 'completed') {
+            return request()->filled('approved'); 
+    
+        if ($user->id === $task->user_id) {
+            return !request()->filled('approved');
+        }
+    
+        return false;
     }
+    
+
+    
+
 
     /**
      * Determine whether the user can delete the model.

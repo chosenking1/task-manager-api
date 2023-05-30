@@ -26,11 +26,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
-Route::resource('/department', DepartmentController::class);
+Route::get('/department', [DepartmentController::class, 'index']);
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
 
 Route::resource('/task', TaskController::class);
+Route::resource('/department', DepartmentController::class);
 
 Route::post('/logout', [AuthController::class, 'logout']);
 

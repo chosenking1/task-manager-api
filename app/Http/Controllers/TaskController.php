@@ -9,7 +9,7 @@ use App\Mail\TaskCompleted;
 
 use App\Models\Task;
 use App\Models\User;
-use App\Models\Department;
+
 
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -69,27 +69,26 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        $this->authorize('update', $task);
-    
-        if ($request->has('approved')) {
-            $task->update($request->all());
-    
-            // Check if approved is true or 1
-            if ($request->input('approved') === true || $request->input('approved') === 1) {
-                $this->sendEmail($task, Auth::user()->name);
+        
+        $this->authorize('update', $task, );
+        $user = Auth::user();
+
+    if ($request->has('approved')) {
+            
+    if ($request->approved == true || $request->approved == 1) {
+                $this->sendEmailNotification($task, Auth::user()->name);
             }
-    
-            return new TaskResource($task);
-        } else {
-            $task->update($request->all());
-    
-            // Check if status is completed
-            if ($request->has('status') && $request->input('status') == 'completed') {
-                $this->sendEmail($task);
+                $task->update($request->all());
+                return new TaskResource($task);
+        } 
+        
+            if ($request->has('status') && $request->status == 'completed') {
+                $this->sendEmailNotification($task);
             }
-    
+            
+            $task->update($request->all());
             return new TaskResource($task);
-        }
+        
     }
     
 
@@ -108,8 +107,7 @@ class TaskController extends Controller
     }
 
 
-    private function sendEmail($task, $name = null){
-        // Get the staff who owns the task
+    private function sendEmailNotification($task, $name = null){
         $staff = $task->user;
         
         if ($name) {
@@ -118,13 +116,11 @@ class TaskController extends Controller
     } 
        
       else { 
-       // Get the list of approvers in the same department
-       $department = Department::findOrFail($task->department_id);
+            $approvers = User::where('department_id', $task->department_id)
+            ->where('user_role', 'approver')
+            ->get();
 
-       $approvers = $department->users()
-           ->where('user_role', 'approver')
-           ->get();
-        // Send an email to each approver
+      
         foreach ($approvers as $approver) {
             
             $approvalUrl = route('approve.task', ['task' => $task->id]);
@@ -136,7 +132,5 @@ class TaskController extends Controller
     }
     }
 
-    private function findApprover(){
-
-    }
+    
 }
