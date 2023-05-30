@@ -45,7 +45,7 @@ class TaskPolicy
     {
         if ($user->user_role === 'approver' && $task->status == 'completed') {
             return request()->filled('approved'); 
-    
+        }
         if ($user->id === $task->user_id) {
             return !request()->filled('approved');
         }
