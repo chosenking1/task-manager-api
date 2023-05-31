@@ -15,6 +15,13 @@ class AuthController extends Controller
 {
     use HttpResponses;
 
+    public function index()
+    {
+        $users = User::all();
+
+        return response()->json($users);
+    }
+
     public function login(LoginRequest $request){
         $credentials = $request->only('email', 'password');
         
