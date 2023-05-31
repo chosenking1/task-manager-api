@@ -57,4 +57,20 @@ class AuthController extends Controller
             'message' => 'You have successfully been logged out'
         ]);
     }
+
+    public function delete( $id)
+{
+    // Validate the request, e.g., check if the authenticated user has permission to delete a user
+    $user = User::findOrFail($id);
+    
+    // Perform the delete operation
+    $deleted = $user->delete();
+    
+    // Handle the delete result
+    if ($deleted) {
+        return response()->json(['message' => 'User deleted successfully']);
+    } else {
+        return response()->json(['message' => 'Failed to delete user'], 500);
+    }
+}
 }

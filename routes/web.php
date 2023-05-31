@@ -22,9 +22,7 @@ Route::get('approve-task/{task}', function ($task) {
     
 })->name('approve.task');
 
-// Route::get('approve-task/{task}', function ($task) {
-//     return redirect('https://www.google.com');
-// })->name('approve.task');
+
 
 Route::get('task/{task}', function ($task) {
     // return redirect("http://localhost:3000/task/$task");

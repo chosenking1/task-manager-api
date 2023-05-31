@@ -5,10 +5,10 @@ Hello {{ $approver }},
 
 This task "{{ $task_name}}" has been completed.
 Here are the details
-{{ $task_description }}
-{{ $task_status}}
-{{ $task_created }}
-{{ $task_updated }}
+- Description: {{ $task_description }}
+- Status: {{ $task_status}}
+- Created At: {{ $task_created }}
+- Updated At: {{ $task_updated }}
 submited complete by {{ $username }}
 
 {{-- <x-mail::table>
