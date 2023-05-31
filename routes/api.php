@@ -25,8 +25,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post('/login', [AuthController::class, 'login']);
-Route::Delete('/deleteUser/{$id}', [AuthController::class, 'delete']);
+Route::delete('/deleteUser/{$id}', [AuthController::class, 'delete']);
 Route::post('/register', [AuthController::class, 'register']);
+Route::get('/users', [AuthController::class, 'index']);
+
 Route::get('/department/index', [DepartmentController::class, 'index'])->withoutMiddleware('auth:sanctum');
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
