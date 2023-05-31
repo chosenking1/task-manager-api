@@ -80,4 +80,6 @@ class AuthController extends Controller
         return response()->json(['message' => 'Failed to delete user'], 500);
     }
 }
+
+
 }
