@@ -9,7 +9,7 @@ Here are the details
 - Status: {{ $task_status}}
 - Created At: {{ $task_created }}
 - Updated At: {{ $task_updated }}
-submited complete by {{ $username }}
+submited completed by {{ $username }}
 
 {{-- <x-mail::table>
 | Laravel       | Table         | Example  |
