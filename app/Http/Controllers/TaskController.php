@@ -74,20 +74,21 @@ class TaskController extends Controller
         $user = Auth::user();
 
     if ($request->has('approved')) {
-            
+            $task->update($request->all());
+                return new TaskResource($task);
+
     if ($request->approved == true || $request->approved == 1) {
                 $this->sendEmailNotification($task, Auth::user()->name);
             }
-                $task->update($request->all());
-                return new TaskResource($task);
         } 
-        
+        $task->update($request->all());
+            return new TaskResource($task);
+            
             if ($request->has('status') && $request->status == 'completed') {
                 $this->sendEmailNotification($task);
             }
             
-            $task->update($request->all());
-            return new TaskResource($task);
+           
         
     }
     
